@@ -4,12 +4,18 @@ from django.db import models
 class RessourceType(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
 
+    def __str__(self):
+        return self.name
+
 
 class Ressource(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
     type = models.ForeignKey("ressource.RessourceType", null=True, on_delete=models.SET_NULL)
     localisation = models.CharField(max_length=200, verbose_name="Lieu")
     capacity = models.IntegerField(default=10, verbose_name="Capacité")
+
+    def __str__(self):
+        return self.name
 
 
 class Reservation(models.Model):
