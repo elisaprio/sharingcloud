@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {{ form.media.css }}
+    <title>Mes reservations</title>
+    <link rel="stylesheet" href={% static "ressource/css/reservations.css" %}>
+</head>
+
+<body>
+
+<h1>MES RESERVATIONS</h1>
+
+<div class="reservations-container">
+    <div class="past-container">
+        <h2>Réservations passées</h2>
+        {% include "reservations/reservation.html" with reservations=r_past %}
+    </div>
+    <div class="present-container">
+        <h2>Réservations en cours</h2>
+        {% include "reservations/reservation.html" with reservations=r_present %}
+
+    </div>
+    <div class="future-container">
+        <h2>Réservations futures</h2>
+        {% include "reservations/reservation.html" with reservations=r_future %}
+
+    </div>
+</div>
+
+<form class="form-container" action="" method="post">
+    {% csrf_token %}
+    <button onclick="closeForm()">Fermer</button>
+    {{ form }}
+    <button onclick="submitForm()" type="button">Valider</button>
+    <div class="errors"></div>
+</form>
+
+<div class="new-reservation-container">
+    <button onclick="newReservation()">Ajouter une réservation</button>
+</div>
+
+</body>
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+{{ form.media.js }}
+<script src={% static "ressource/js/reservations.js" %}></script>
+<script src={% static "js/ajax_utils.js" %}></script>
+</html>

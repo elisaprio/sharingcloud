@@ -4,6 +4,12 @@ from django.contrib import admin
 from ressource.models import Ressource, RessourceType, Reservation
 
 
+class ReservationAdmin(admin.ModelAdmin):
+    model = Reservation
+    list_display = ("title", "start_date", "end_date", "ressource")
+    list_filter = ("ressource",)
+
+
 class RessourceAdmin(admin.ModelAdmin):
     model = Ressource
     list_display = ("name", "type")
@@ -12,4 +18,4 @@ class RessourceAdmin(admin.ModelAdmin):
 
 admin.site.register(Ressource, RessourceAdmin)
 admin.site.register(RessourceType)
-admin.site.register(Reservation)
+admin.site.register(Reservation, ReservationAdmin)

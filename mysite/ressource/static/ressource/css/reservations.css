@@ -1,0 +1,37 @@
+.reservations-container {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.reservations-container > div {
+    flex: 1;
+}
+
+.present-container {
+    margin : 0 2rem;
+    padding : 0 2rem;
+    border-left: 1px solid darkgrey;
+    border-right: 1px solid darkgrey;
+}
+
+.reservation-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+
+.reservation-container > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.reservation-container > div p {
+    margin-right: auto;
+}
+
+.form-container {
+    display: none;
+}

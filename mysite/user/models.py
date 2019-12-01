@@ -17,4 +17,4 @@ class Profile(models.Model):
     tz = models.ForeignKey("user.MytimezoneTable", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return self.user
+        return f"{self.user.first_name} {self.user.last_name}"

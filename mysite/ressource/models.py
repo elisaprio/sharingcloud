@@ -23,4 +23,7 @@ class Reservation(models.Model):
     start_date = models.DateTimeField(verbose_name="Date et heure de début")
     end_date = models.DateTimeField(verbose_name="Date et heure de fin")
     ressource = models.ForeignKey("ressource.Ressource", verbose_name="Ressource", null=True, on_delete=models.SET_NULL)
-    profile = models.ForeignKey("user.Profile", verbose_name="Utilisateur", on_delete=models.CASCADE)
+    profile = models.ForeignKey("user.Profile", verbose_name="Utilisateur", on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
