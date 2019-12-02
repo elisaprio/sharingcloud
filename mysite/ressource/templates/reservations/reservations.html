@@ -1,68 +1,66 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% block head %}
     {{ form.media.css }}
     <title>Mes reservations</title>
     <link rel="stylesheet" href={% static "ressource/css/reservations.css" %}>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
 
-<h1>MES RESERVATIONS</h1>
+    <h1>MES RESERVATIONS</h1>
 
-<div class="reservations-container">
-    <div class="past-container">
-        <h2>Réservations passées</h2>
-        {% include "reservations/reservation.html" with reservations=r_past %}
-    </div>
-    <div class="present-container">
-        <h2>Réservations en cours</h2>
-        {% include "reservations/reservation.html" with reservations=r_present %}
-
-    </div>
-    <div class="future-container">
-        <h2>Réservations futures</h2>
-        {% include "reservations/reservation.html" with reservations=r_future %}
-
-    </div>
-</div>
-
-<div class="form-container">
-    <form action="" method="post">
-        <button onclick="closeForm()" type="button">Fermer</button>
-        {% csrf_token %}
-        <div class="fields-container">
-            <h4 class="form-title">Ajouter une réservation</h4>
-            {% for field in form %}
-                <div class="field-container">
-                    {% if not field.is_hidden %}
-                        {{ field.label_tag }}
-                    {% endif %}
-                    {{ field }}
-                </div>
-                <div id="id_error_{{ field.name }}" class="errors-list"></div>
-            {% endfor %}
-            <button onclick="submitForm()" type="button">Valider</button>
-            <div class="errors"></div>
+    <div class="reservations-container">
+        <div class="past-container">
+            <h2>Réservations passées</h2>
+            {% include "reservations/reservation.html" with reservations=r_past %}
         </div>
-    </form>
-</div>
+        <div class="present-container">
+            <h2>Réservations en cours</h2>
+            {% include "reservations/reservation.html" with reservations=r_present %}
+
+        </div>
+        <div class="future-container">
+            <h2>Réservations futures</h2>
+            {% include "reservations/reservation.html" with reservations=r_future %}
+
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form action="" method="post">
+            <button onclick="closeForm()" type="button">Fermer</button>
+            {% csrf_token %}
+            <div class="fields-container">
+                <h4 class="form-title">Ajouter une réservation</h4>
+                {% for field in form %}
+                    <div class="field-container">
+                        {% if not field.is_hidden %}
+                            {{ field.label_tag }}
+                        {% endif %}
+                        {{ field }}
+                    </div>
+                    <div id="id_error_{{ field.name }}" class="errors-list"></div>
+                {% endfor %}
+                <button onclick="submitForm()" type="button">Valider</button>
+                <div class="errors"></div>
+            </div>
+        </form>
+    </div>
 
 
-<div class="new-reservation-container">
-    <button id="id_add_reservation" onclick="addReservation()">Ajouter une réservation</button>
-</div>
+    <div class="new-reservation-container">
+        <button id="id_add_reservation" onclick="addReservation()">Ajouter une réservation</button>
+    </div>
+{% endblock %}
 
-</body>
-
-<script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-{{ form.media.js }}
-<script src={% static "ressource/js/reservations.js" %}></script>
-<script src={% static "js/ajax_utils.js" %}></script>
-</html>
+{% block bottom %}
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    {{ form.media.js }}
+    <script src={% static "ressource/js/reservations.js" %}></script>
+    <script src={% static "js/ajax_utils.js" %}></script>
+{% endblock %}
