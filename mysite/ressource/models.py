@@ -15,7 +15,7 @@ class Ressource(models.Model):
     capacity = models.IntegerField(default=10, verbose_name="Capacité")
 
     def __str__(self):
-        return self.name
+        return self.localisation + " - " + self.name
 
 
 class Reservation(models.Model):

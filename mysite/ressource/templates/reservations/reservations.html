@@ -30,16 +30,30 @@
     </div>
 </div>
 
-<form class="form-container" action="" method="post">
-    {% csrf_token %}
-    <button onclick="closeForm()">Fermer</button>
-    {{ form }}
-    <button onclick="submitForm()" type="button">Valider</button>
-    <div class="errors"></div>
-</form>
+<div class="form-container">
+    <form action="" method="post">
+        <button onclick="closeForm()" type="button">Fermer</button>
+        {% csrf_token %}
+        <div class="fields-container">
+            <h4 class="form-title">Ajouter une réservation</h4>
+            {% for field in form %}
+                <div class="field-container">
+                    {% if not field.is_hidden %}
+                        {{ field.label_tag }}
+                    {% endif %}
+                    {{ field }}
+                </div>
+                <div id="id_error_{{ field.name }}" class="errors-list"></div>
+            {% endfor %}
+            <button onclick="submitForm()" type="button">Valider</button>
+            <div class="errors"></div>
+        </div>
+    </form>
+</div>
+
 
 <div class="new-reservation-container">
-    <button onclick="newReservation()">Ajouter une réservation</button>
+    <button id="id_add_reservation" onclick="addReservation()">Ajouter une réservation</button>
 </div>
 
 </body>

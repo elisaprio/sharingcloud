@@ -6,12 +6,23 @@ $('#id_start_date').datetimepicker();
 $('#id_end_date').datetimepicker();
 
 function openForm(reservationId) {
-    $(".form-container").show();
+    $(".form-container").css("display", "flex");
+    $("#id_add_reservation").hide();
     $("#id_id").val(reservationId);
+    const request = $.ajax({
+        url: reservationId+"/",
+        method: "GET",
+    });
+    request.done(function (data) {
+        for (const [key, value] of Object.entries(data)) {
+          $("#id_"+key).val(value);
+        }
+    })
 }
 
 function closeForm() {
     $(".form-container").hide();
+    $("#id_add_reservation").show();
 }
 
 function cancelReservation(reservationId) {
@@ -24,32 +35,47 @@ function cancelReservation(reservationId) {
         method: "POST",
     });
     request.done(function () {
-        console.log("CANCEL SUcESS");
         $("#resa_"+reservationId).remove();
     })
 }
 
 function submitForm() {
-    const data = $(".form-container").serialize();
+    const data = $(".form-container form").serialize();
     const request = $.ajax({
         url: "",
         data: data,
         method: "POST",
     });
     request.done(function (data) {
-        console.log("SUBMIT SUcESS");
-        console.log(data);
+        if(data.errors){
+            for (const [key, value] of Object.entries(data.errors)) {
+          let html = '<p>'+value+'</p>';
+          $("#id_error_"+key).html(html);
+        }
+        }else{
+            const newReservation =
+            '<div class="reservation-container">' +
+                '<div id="resa_"'+data.id+'>'+
+                    '<p>'+data.title+'</p>'+
+                    '<button onclick="openForm('+data.id+')">Modifier</button>'+
+                    '<button onclick="cancelReservation('+data.id+')">Annuler</button>'+
+                '</div>'+
+            '</div>';
+            $(".future-container").append(newReservation);
+            $(".form-container").hide();
+            $("#id_add_reservation").show();
+        }
+
     })
     request.fail(function (response) {
-        console.log("SUBMIT ERROR");
-        console.log(response);
-        $(".errors").html(response.errors);
+        $(".errors").html("<p>An error occured.</p>");
     })
-    $(".form-container").hide();
+
 }
 
-function newReservation() {
-    $(".form-container").show();
+function addReservation() {
+    $(".form-container").css("display", "flex");
+    $("#id_add_reservation").hide();
     $("#id_id").val(null);
 }
 
