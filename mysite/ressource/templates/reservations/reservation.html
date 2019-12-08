@@ -1,9 +1,11 @@
+{% load i18n %}
+
 <div class="reservation-container">
     {% for r in reservations %}
         <div id="resa_{{ r.id }}">
             <p>{{ r.title }}</p>
-            <button onclick="openForm({{ r.id }})">Modifier</button>
-            <button onclick="cancelReservation({{ r.id }})">Annuler</button>
+            <button onclick="openForm({{ r.id }})">{% trans "Modify" %}</button>
+            <button onclick="cancelReservation({{ r.id }})">{% trans "Cancel" %}</button>
         </div>
     {% endfor %}
 </div>

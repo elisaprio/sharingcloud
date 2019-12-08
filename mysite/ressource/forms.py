@@ -1,3 +1,4 @@
+import pytz
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -14,32 +15,37 @@ class AddRessourceForm(ModelForm):
     def clean_start_date(self):
         now = timezone.now()
         start_date = self.cleaned_data.get("start_date")
+        start_date = start_date.astimezone(pytz.utc)
         if start_date and start_date < now:
-            return ValidationError(_('Invalid value'), code="invalid")
+            raise ValidationError(_("Start date in the past"), code="invalid")
         return start_date
 
     def clean_end_date(self):
         now = timezone.now()
         end_date = self.cleaned_data.get("end_date")
+        end_date = end_date.astimezone(pytz.utc)
         if end_date and end_date < now:
-            return ValidationError(_('Invalid value'), code="invalid")
+            raise ValidationError(_("End date in the past"), code="invalid")
         return end_date
 
     def clean(self):
         cleaned_data = super().clean()
+        id = cleaned_data.get("id")
         start_date = cleaned_data.get("start_date")
         end_date = cleaned_data.get("end_date")
         ressource = cleaned_data.get("ressource")
-        if end_date <= start_date:
-            self.add_error("end_date",(
-                ValidationError(_("End date earlier than start date"), code="invalid")
-            ))
-        else:
-            reservations_same_time = Reservation.objects.filter(ressource=ressource, start_date__lte=end_date, end_date__gte=start_date)
-            if reservations_same_time.exists():
-                self.add_error("start_date", (
-                    ValidationError(_("Another reservation exists during this time range in the same room"), code="invalid")
+
+        if start_date and end_date:
+            if end_date <= start_date:
+                self.add_error("end_date",(
+                    ValidationError(_("End date earlier than start date"), code="invalid")
                 ))
+            else:
+                reservations_same_time = Reservation.objects.filter(ressource=ressource, start_date__lte=end_date, end_date__gte=start_date).exclude(id=id)
+                if reservations_same_time.exists():
+                    self.add_error("start_date", (
+                        ValidationError(_("Another reservation exists during this time range in the same room"), code="invalid")
+                    ))
 
     class Meta:
         model = Reservation

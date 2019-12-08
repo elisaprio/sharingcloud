@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.views import View
 
 from ressource.forms import AddRessourceForm
@@ -17,6 +18,9 @@ class ManageReservations(LoginRequiredMixin, View):
     template_name = "reservations/reservations.html"
 
     def get(self, request, reservation_id=None):
+        profile = Profile.objects.get(user=request.user)
+        tz = profile.get_timezone()
+
         if not reservation_id:
             form = self.form_class(initial=self.initial)
             now = timezone.now()
@@ -43,13 +47,15 @@ class ManageReservations(LoginRequiredMixin, View):
                 values = reservation.values("title", "start_date", "end_date", "ressource__id").first()
                 context = {
                     "title": values["title"],
-                    "start_date": datetime.strftime(values["start_date"], "%Y/%m/%d %H:%M"),
-                    "end_date": datetime.strftime(values["end_date"], "%Y/%m/%d %H:%M"),
+                    "start_date": datetime.strftime(values["start_date"].astimezone(tz), "%Y/%m/%d %H:%M"),
+                    "end_date": datetime.strftime(values["end_date"].astimezone(tz), "%Y/%m/%d %H:%M"),
                     "ressource": values["ressource__id"]
                 }
             return JsonResponse(context)
 
     def post(self, request):
+        profile = Profile.objects.get(user=request.user)
+
         payload = request.POST.dict()
         payload.pop("csrfmiddlewaretoken")
         if payload.get("start_date"):
@@ -62,15 +68,19 @@ class ManageReservations(LoginRequiredMixin, View):
                 id = payload.pop("id")
                 cancel = payload.pop("cancel", False)
                 reservation = Reservation.objects.filter(id=id)
+                if not request.user.is_superuser and request.user != reservation.first().profile.user:
+                    return JsonResponse({"errors": {"title": _("You are not authorized to modify this reservation")}})
                 if cancel == "True":
                     reservation.delete()
                 else:
                     reservation.update(**payload)
+                return JsonResponse({})
+
             else:
                 new_reservation = form.save(commit=False)
-                new_reservation.profile = Profile.objects.get(user=request.user)
+                new_reservation.profile = profile
                 new_reservation.save()
-            return JsonResponse({"id": new_reservation.id, "title": new_reservation.title})
+                return JsonResponse({"id": new_reservation.id, "title": new_reservation.title})
         else:
             errors = form.errors
             return JsonResponse({"errors": errors})

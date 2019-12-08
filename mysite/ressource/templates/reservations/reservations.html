@@ -1,28 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block head %}
     {{ form.media.css }}
-    <title>Mes reservations</title>
+    <title>{% trans "My Reservations" %}</title>
     <link rel="stylesheet" href={% static "ressource/css/reservations.css" %}>
 {% endblock %}
 
 {% block content %}
 
-    <h1>MES RESERVATIONS</h1>
+    <h1>{% trans "My Reservations" %}</h1>
 
     <div class="reservations-container">
         <div class="past-container">
-            <h2>Réservations passées</h2>
+            <h2>{% trans "Past Reservations" %}</h2>
             {% include "reservations/reservation.html" with reservations=r_past %}
         </div>
         <div class="present-container">
-            <h2>Réservations en cours</h2>
+            <h2>{% trans "Current Reservations" %}</h2>
             {% include "reservations/reservation.html" with reservations=r_present %}
 
         </div>
         <div class="future-container">
-            <h2>Réservations futures</h2>
+            <h2>{% trans "Futures Reservations" %}</h2>
             {% include "reservations/reservation.html" with reservations=r_future %}
 
         </div>
@@ -30,10 +31,10 @@
 
     <div class="form-container">
         <form action="" method="post">
-            <button onclick="closeForm()" type="button">Fermer</button>
+            <button onclick="closeForm()" type="button">{% trans "Close" %}</button>
             {% csrf_token %}
             <div class="fields-container">
-                <h4 class="form-title">Ajouter une réservation</h4>
+                <h4 class="form-title">{% trans "Add a reservation" %}</h4>
                 {% for field in form %}
                     <div class="field-container">
                         {% if not field.is_hidden %}
@@ -43,7 +44,7 @@
                     </div>
                     <div id="id_error_{{ field.name }}" class="errors-list"></div>
                 {% endfor %}
-                <button onclick="submitForm()" type="button">Valider</button>
+                <button onclick="submitForm()" type="button">{% trans "Validate" %}</button>
                 <div class="errors"></div>
             </div>
         </form>
@@ -51,7 +52,7 @@
 
 
     <div class="new-reservation-container">
-        <button id="id_add_reservation" onclick="addReservation()">Ajouter une réservation</button>
+        <button id="id_add_reservation" onclick="addReservation()">{% trans "Add a reservation" %}</button>
     </div>
 {% endblock %}
 
