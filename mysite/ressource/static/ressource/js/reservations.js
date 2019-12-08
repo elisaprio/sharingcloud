@@ -1,9 +1,15 @@
 const $ = jQuery;
 
-$.datetimepicker.setLocale('fr');
+$.datetimepicker.setLocale('en');
 
-$('#id_start_date').datetimepicker();
-$('#id_end_date').datetimepicker();
+$('#id_start_date').datetimepicker({
+    minDate: Date.now(),
+    mask:true
+});
+$('#id_end_date').datetimepicker({
+    minDate: Date.now(),
+    mask:true
+});
 
 function openForm(reservationId) {
     $("form").trigger("reset");
@@ -60,8 +66,8 @@ function submitForm() {
                     '<div class="reservation-container">' +
                     '<div id="resa_"' + data.id + '>' +
                     '<p>' + data.title + '</p>' +
-                    '<button onclick="openForm(' + data.id + ')">'+data.modifyButton+'</button>' +
-                    '<button onclick="cancelReservation(' + data.id + ')">+data.cancelButton+</button>' +
+                    '<button onclick="openForm(' + data.id + ')">'+ data.modifyButton +'</button>' +
+                    '<button onclick="cancelReservation(' + data.id + ')">' + data.cancelButton + '</button>' +
                     '</div>' +
                     '</div>';
                 $(".future-container").append(newReservation);

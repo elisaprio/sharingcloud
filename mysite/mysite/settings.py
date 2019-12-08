@@ -137,3 +137,12 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = "/ressources/reservations/"
+
+
+# CACHE
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
