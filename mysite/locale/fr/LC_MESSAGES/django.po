@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-08 20:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: mysite/settings.py:114
+msgid "French"
+msgstr "Français"
+
+#: mysite/settings.py:115
+msgid "English"
+msgstr "Anglais"
+
+#: ressource/forms.py:20
+msgid "Start date in the past"
+msgstr "Date de début dans le passé"
+
+#: ressource/forms.py:28
+msgid "End date in the past"
+msgstr "Date de fin dans le passé"
+
+#: ressource/forms.py:41
+msgid "End date earlier than start date"
+msgstr "Date de fin plus tôt que la date de début"
+
+#: ressource/forms.py:47
+msgid "Another reservation exists during this time range in the same room"
+msgstr "Une autre réservation existe déjà pour pour cette salle à la même heure"
+
+#: ressource/models.py:6 ressource/models.py:13
+msgid "Name"
+msgstr "Nom"
+
+#: ressource/models.py:15
+msgid "Place"
+msgstr "Lieu"
+
+#: ressource/models.py:16
+msgid "Capacity"
+msgstr "Capacité"
+
+#: ressource/models.py:23
+msgid "Title"
+msgstr "Titre"
+
+#: ressource/models.py:24
+msgid "Start date and time"
+msgstr "Date et heure de début"
+
+#: ressource/models.py:25
+msgid "End date and time"
+msgstr "Date et heure de fin"
+
+#: ressource/models.py:26
+msgid "Ressource"
+msgstr "Ressource"
+
+#: ressource/models.py:27 user/models.py:21
+msgid "User"
+msgstr "Utilisateur"
+
+#: ressource/templates/reservations/reservation.html:7 ressource/views.py:83
+msgid "Modify"
+msgstr "Modifier"
+
+#: ressource/templates/reservations/reservation.html:8 ressource/views.py:83
+msgid "Cancel"
+msgstr "Annuler"
+
+#: ressource/templates/reservations/reservations.html:7
+#: ressource/templates/reservations/reservations.html:13
+msgid "My Reservations"
+msgstr "Mes réservations"
+
+#: ressource/templates/reservations/reservations.html:17
+msgid "Past Reservations"
+msgstr "Mes réservations passées"
+
+#: ressource/templates/reservations/reservations.html:21
+msgid "Current Reservations"
+msgstr "Mes réservations en cours"
+
+#: ressource/templates/reservations/reservations.html:26
+msgid "Futures Reservations"
+msgstr "Mes réservations futures"
+
+#: ressource/templates/reservations/reservations.html:34
+msgid "Close"
+msgstr "Fermer"
+
+#: ressource/templates/reservations/reservations.html:37
+#: ressource/templates/reservations/reservations.html:55
+msgid "Add a reservation"
+msgstr "Ajouter une réservation"
+
+#: ressource/templates/reservations/reservations.html:47
+msgid "Validate"
+msgstr "Valider"
+
+#: ressource/views.py:72
+msgid "You are not authorized to modify this reservation"
+msgstr "Vous n'êtes pas autorisé à modifier cette réservation"
+
+#: user/models.py:22
+msgid "Timezone"
+msgstr "Fuseau horaire"

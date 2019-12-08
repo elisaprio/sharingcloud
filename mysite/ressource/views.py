@@ -80,7 +80,7 @@ class ManageReservations(LoginRequiredMixin, View):
                 new_reservation = form.save(commit=False)
                 new_reservation.profile = profile
                 new_reservation.save()
-                return JsonResponse({"id": new_reservation.id, "title": new_reservation.title})
+                return JsonResponse({"id": new_reservation.id, "title": new_reservation.title, "modifyButton":_("Modify"), "cancelButton": _("Cancel")})
         else:
             errors = form.errors
             return JsonResponse({"errors": errors})

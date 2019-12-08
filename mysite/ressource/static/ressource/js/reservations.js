@@ -60,8 +60,8 @@ function submitForm() {
                     '<div class="reservation-container">' +
                     '<div id="resa_"' + data.id + '>' +
                     '<p>' + data.title + '</p>' +
-                    '<button onclick="openForm(' + data.id + ')">Modify</button>' +
-                    '<button onclick="cancelReservation(' + data.id + ')">Cancel</button>' +
+                    '<button onclick="openForm(' + data.id + ')">'+data.modifyButton+'</button>' +
+                    '<button onclick="cancelReservation(' + data.id + ')">+data.cancelButton+</button>' +
                     '</div>' +
                     '</div>';
                 $(".future-container").append(newReservation);
