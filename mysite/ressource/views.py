@@ -104,6 +104,7 @@ class ManageReservations(LoginRequiredMixin, View):
                     return JsonResponse({"errors": {"title": _("You are not authorized to modify this reservation")}})
                 if cancel == "True":
                     self.delete_cache_reservation(id)
+                    cache.delete(f"ReservationPresent*Profile[id={profile.id}]")
                     cache.delete(f"ReservationFuture*Profile[id={profile.id}]")
                     reservation.delete()
                 else:
